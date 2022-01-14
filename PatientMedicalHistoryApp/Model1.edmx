@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PatientMedicalHistoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AllergyHistory">
+          <Key>
+            <PropertyRef Name="AllergyID" />
+          </Key>
+          <Property Name="AllergyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Allergen" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AllergyDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="_PatientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GeneralMedicalHistory">
+          <Key>
+            <PropertyRef Name="GeneralMedicalHistoryID" />
+          </Key>
+          <Property Name="GeneralMedicalHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MartialStatus" Type="nvarchar" MaxLength="20" />
+          <Property Name="Education" Type="nvarchar" MaxLength="50" />
+          <Property Name="BloodType" Type="nchar" MaxLength="10" />
+          <Property Name="Pregnancies" Type="nvarchar" MaxLength="10" />
+          <Property Name="Tobacco" Type="nchar" MaxLength="10" />
+          <Property Name="Alcohol" Type="nchar" MaxLength="10" />
+          <Property Name="Drug" Type="nchar" MaxLength="10" />
+          <Property Name="MedicalHistoryNotes" Type="nvarchar" MaxLength="200" />
+          <Property Name="_PatientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientFirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PatientLastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="ContactNumber" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PatientHistory">
+          <Key>
+            <PropertyRef Name="MedicalHistoryID" />
+          </Key>
+          <Property Name="MedicalHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DiseaseHistory" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="SurgeryHistory" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MenstrualHistory" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="_PatientID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AllergyHistory_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="AllergyHistory" Type="Self.AllergyHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="AllergyHistory">
+              <PropertyRef Name="_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeneralMedicalHistory_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="GeneralMedicalHistory" Type="Self.GeneralMedicalHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="GeneralMedicalHistory">
+              <PropertyRef Name="_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientHistory_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientHistory" Type="Self.PatientHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="PatientHistory">
+              <PropertyRef Name="_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PatientMedicalHistoryModelStoreContainer">
+          <EntitySet Name="AllergyHistory" EntityType="Self.AllergyHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeneralMedicalHistory" EntityType="Self.GeneralMedicalHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientHistory" EntityType="Self.PatientHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AllergyHistory_Patient" Association="Self.FK_AllergyHistory_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="AllergyHistory" EntitySet="AllergyHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralMedicalHistory_Patient" Association="Self.FK_GeneralMedicalHistory_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="GeneralMedicalHistory" EntitySet="GeneralMedicalHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientHistory_Patient" Association="Self.FK_PatientHistory_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientHistory" EntitySet="PatientHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PatientMedicalHistoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PatientMedicalHistoryEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AllergyHistories" EntityType="PatientMedicalHistoryModel.AllergyHistory" />
+          <EntitySet Name="GeneralMedicalHistories" EntityType="PatientMedicalHistoryModel.GeneralMedicalHistory" />
+          <EntitySet Name="Patients" EntityType="PatientMedicalHistoryModel.Patient" />
+          <EntitySet Name="PatientHistories" EntityType="PatientMedicalHistoryModel.PatientHistory" />
+          <AssociationSet Name="FK_AllergyHistory_Patient" Association="PatientMedicalHistoryModel.FK_AllergyHistory_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="AllergyHistory" EntitySet="AllergyHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralMedicalHistory_Patient" Association="PatientMedicalHistoryModel.FK_GeneralMedicalHistory_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="GeneralMedicalHistory" EntitySet="GeneralMedicalHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientHistory_Patient" Association="PatientMedicalHistoryModel.FK_PatientHistory_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="PatientHistory" EntitySet="PatientHistories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AllergyHistory">
+          <Key>
+            <PropertyRef Name="AllergyID" />
+          </Key>
+          <Property Name="AllergyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Allergen" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AllergyDescription" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C_PatientID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="PatientMedicalHistoryModel.FK_AllergyHistory_Patient" FromRole="AllergyHistory" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="GeneralMedicalHistory">
+          <Key>
+            <PropertyRef Name="GeneralMedicalHistoryID" />
+          </Key>
+          <Property Name="GeneralMedicalHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MartialStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Education" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BloodType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Pregnancies" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Tobacco" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Alcohol" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Drug" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MedicalHistoryNotes" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C_PatientID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="PatientMedicalHistoryModel.FK_GeneralMedicalHistory_Patient" FromRole="GeneralMedicalHistory" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientFirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PatientLastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="ContactNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AllergyHistories" Relationship="PatientMedicalHistoryModel.FK_AllergyHistory_Patient" FromRole="Patient" ToRole="AllergyHistory" />
+          <NavigationProperty Name="GeneralMedicalHistories" Relationship="PatientMedicalHistoryModel.FK_GeneralMedicalHistory_Patient" FromRole="Patient" ToRole="GeneralMedicalHistory" />
+          <NavigationProperty Name="PatientHistories" Relationship="PatientMedicalHistoryModel.FK_PatientHistory_Patient" FromRole="Patient" ToRole="PatientHistory" />
+        </EntityType>
+        <EntityType Name="PatientHistory">
+          <Key>
+            <PropertyRef Name="MedicalHistoryID" />
+          </Key>
+          <Property Name="MedicalHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DiseaseHistory" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="SurgeryHistory" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MenstrualHistory" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="C_PatientID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="PatientMedicalHistoryModel.FK_PatientHistory_Patient" FromRole="PatientHistory" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK_AllergyHistory_Patient">
+          <End Type="PatientMedicalHistoryModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="PatientMedicalHistoryModel.AllergyHistory" Role="AllergyHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="AllergyHistory">
+              <PropertyRef Name="C_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeneralMedicalHistory_Patient">
+          <End Type="PatientMedicalHistoryModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="PatientMedicalHistoryModel.GeneralMedicalHistory" Role="GeneralMedicalHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="GeneralMedicalHistory">
+              <PropertyRef Name="C_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientHistory_Patient">
+          <End Type="PatientMedicalHistoryModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="PatientMedicalHistoryModel.PatientHistory" Role="PatientHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="PatientHistory">
+              <PropertyRef Name="C_PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PatientMedicalHistoryModelStoreContainer" CdmEntityContainer="PatientMedicalHistoryEntities1">
+          <EntitySetMapping Name="AllergyHistories">
+            <EntityTypeMapping TypeName="PatientMedicalHistoryModel.AllergyHistory">
+              <MappingFragment StoreEntitySet="AllergyHistory">
+                <ScalarProperty Name="C_PatientID" ColumnName="_PatientID" />
+                <ScalarProperty Name="AllergyDescription" ColumnName="AllergyDescription" />
+                <ScalarProperty Name="Allergen" ColumnName="Allergen" />
+                <ScalarProperty Name="AllergyID" ColumnName="AllergyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralMedicalHistories">
+            <EntityTypeMapping TypeName="PatientMedicalHistoryModel.GeneralMedicalHistory">
+              <MappingFragment StoreEntitySet="GeneralMedicalHistory">
+                <ScalarProperty Name="C_PatientID" ColumnName="_PatientID" />
+                <ScalarProperty Name="MedicalHistoryNotes" ColumnName="MedicalHistoryNotes" />
+                <ScalarProperty Name="Drug" ColumnName="Drug" />
+                <ScalarProperty Name="Alcohol" ColumnName="Alcohol" />
+                <ScalarProperty Name="Tobacco" ColumnName="Tobacco" />
+                <ScalarProperty Name="Pregnancies" ColumnName="Pregnancies" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="MartialStatus" ColumnName="MartialStatus" />
+                <ScalarProperty Name="GeneralMedicalHistoryID" ColumnName="GeneralMedicalHistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="PatientMedicalHistoryModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
+                <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientHistories">
+            <EntityTypeMapping TypeName="PatientMedicalHistoryModel.PatientHistory">
+              <MappingFragment StoreEntitySet="PatientHistory">
+                <ScalarProperty Name="C_PatientID" ColumnName="_PatientID" />
+                <ScalarProperty Name="MenstrualHistory" ColumnName="MenstrualHistory" />
+                <ScalarProperty Name="SurgeryHistory" ColumnName="SurgeryHistory" />
+                <ScalarProperty Name="DiseaseHistory" ColumnName="DiseaseHistory" />
+                <ScalarProperty Name="MedicalHistoryID" ColumnName="MedicalHistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

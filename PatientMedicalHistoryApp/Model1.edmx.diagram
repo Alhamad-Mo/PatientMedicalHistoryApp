@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9af5fa1d848146fab6f69f1cd0769a32" Name="Diagram1">
+        <EntityTypeShape EntityType="PatientMedicalHistoryModel.AllergyHistory" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="PatientMedicalHistoryModel.GeneralMedicalHistory" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="PatientMedicalHistoryModel.Patient" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PatientMedicalHistoryModel.PatientHistory" Width="1.5" PointX="3" PointY="1.25" />
+        <AssociationConnector Association="PatientMedicalHistoryModel.FK_AllergyHistory_Patient" />
+        <AssociationConnector Association="PatientMedicalHistoryModel.FK_GeneralMedicalHistory_Patient" />
+        <AssociationConnector Association="PatientMedicalHistoryModel.FK_PatientHistory_Patient" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
